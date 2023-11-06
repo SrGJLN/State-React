@@ -1,16 +1,12 @@
-// import React from 'react'
-// import { BsFacebook } from 'react-icons/bs';
-// import { BsGithub } from 'react-icons/bs';
-// import { FaLinkedinIn } from 'react-icons/fa';
+import React from 'react';
 
-// const SocialButton = ({git, face, link}) => {
-//   return (
-//     <>
-//     <BsFacebook />
-//     <BsGithub />
-//     <FaLinkedinIn />
-//     </>
-//   )
-// }
 
-// export default SocialButton
+const SocialButton = ({ icon }) => {
+  return (
+    <button className="icons" style={{ width: '50px', height: '50px', border: '1px solid #777' }}>
+    {icon}
+  </button>
+  );
+}
+
+export default SocialButton;

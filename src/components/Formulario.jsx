@@ -1,80 +1,90 @@
-import { useState} from 'react';
+import React, { useState } from 'react';
+import Alert from './Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Badge from 'react-bootstrap/Badge';
 
-const Formulario = ({setError}) => {
 
-  const [name, setName] = useState ('')
-  const [email, setEmail] = useState ('')
-  const [pass, setPass] = useState ('')
-  const [confirmpass, setConfirmPass] = useState ('')
+const Formulario = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(false);
 
-  // const [error, setError] = useState(false)
- 
-  
-  const confirmData = (e) => {
+  const validarDatos = (e) => {
     e.preventDefault();
-    if (name === '' || email === '' || pass === '' || confirmpass === ''){
+
+    if (name === '' || email === '' || pass === '' || confirmPass === '') {
       setError(true);
+      setErrorMsg("Completa todos los campos!")
       return;
-    }setError(false);
+    }
+    if (pass !== confirmPass){
+      setError(true);
+      setErrorMsg("Las contraseñas deben ser iguales")
+      return;
+    }
+  
+    setError(false);
+    setErrorMsg("Registro satisfactorio");
     setName('');
     setEmail('');
     setPass('');
     setConfirmPass('');
-  }
+  };
 
-  
   return (
     <>
-    <div>
-      <Form onSubmit={confirmData} >
-      {/* {error ? <p>Todos los campos son obligatorios</p> : null} */}
-        <Form.Control className="mb-3"
-          type="text"
-          name="firstName"
-          placeholder="Nombre"
-          onChange={e => setName(e.target.value)}
-          value = {name}
-        />
-        <Form.Group >
-          <Form.Control className="mb-3"
-            type="email"
+      <Form className="formulario" onSubmit={validarDatos}>
+        <div className="form-group">
+          <input
+            type="text"
+            name="name"
+            className="form-control"
+            placeholder="Nombre"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type='email'
             name="email"
-            placeholder="email@ejemplo.com"
-            onChange={e => setEmail(e.target.value)}
-            value = {email}
+            className="form-control"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control className="mb-3"
+        </div>
+        <div className="form-group">
+          <input
             type="password"
-            name="password"
+            name="pass"
+            className="form-control"
             placeholder="Contraseña"
-            onChange={e => setPass(e.target.value)}
-            value = {pass}
+            onChange={(e) => setPass(e.target.value)}
+            value={pass}
           />
-          <Form.Control className="mb-3"
+        </div>
+        <div className="form-group">
+          <input
             type="password"
-            name="confirmPassword"
-            placeholder="Confirma tu contraseña"  
-            onChange={e => setConfirmPass(e.target.value)}
-            value = {confirmpass}
+            name="confirmPass"
+            className="form-control"
+            placeholder="Confirmar Contraseña"
+            onChange={(e) => setConfirmPass(e.target.value)}
+            value={confirmPass}
           />
-        </Form.Group>
-          <Button type='submit' variant="success"  className='w-100 mb-2'>
-            Registrarse
-          </Button>
-          
-          
-          
-          
-        </Form>
-    </div>
-
+        </div>
+        
+        <Button type="submit" className="btn btn-success btn-lg btn-block">
+          Registrarse
+        </Button>
+        {errorMsg && <Alert msg= {errorMsg} bad={error}></Alert>}
+      </Form>
     </>
   );
-};
+}
 
 export default Formulario;

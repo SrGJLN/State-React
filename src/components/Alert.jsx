@@ -1,13 +1,12 @@
-import Badge from 'react-bootstrap/Badge';
-function Watchful({error}) {
+import React from 'react';
+
+
+const Alert = ({ msg, bad}) => {
   return (
-    <>
-    <div className="alerta">
-    <Badge bg="danger">{ error ? 'Debe de completar los datos' : null}</Badge>
-          {/* { error ? 'debe de completar los datos' : null} */}
+    <div className={bad ? "error" : "exito"}>
+      {msg}
     </div>
-    </>
   );
 }
 
-export default Watchful;
+export default Alert;
